@@ -34,9 +34,9 @@ void MX_TIM1_Init(void)
   TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
 
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 32-1;
+  htim1.Init.Prescaler = 0;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 500-1;
+  htim1.Init.Period = 1023;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -148,38 +148,41 @@ void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* tim_pwmHandle)
 /* USER CODE BEGIN 1 */
 void setBlue(uint16_t value)
 {
-    TIM_OC_InitTypeDef sConfigOC;
-    HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_1);
-    sConfigOC.OCMode = TIM_OCMODE_PWM1;
-    sConfigOC.Pulse = value;
-    sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-    sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-    HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1);
-    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);  
+    // TIM_OC_InitTypeDef sConfigOC;
+    // HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_1);
+    // sConfigOC.OCMode = TIM_OCMODE_PWM1;
+    // sConfigOC.Pulse = value;
+    // sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+    // sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+    // HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1);
+    // HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);  
+    TIM1->CCR1 = value;
 }
 
 void setRed(uint16_t value)
 {
-    TIM_OC_InitTypeDef sConfigOC;
-    HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_2);
-    sConfigOC.OCMode = TIM_OCMODE_PWM1;
-    sConfigOC.Pulse = value;
-    sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-    sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-    HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2);
-    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);  
+    // TIM_OC_InitTypeDef sConfigOC;
+    // HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_3);
+    // sConfigOC.OCMode = TIM_OCMODE_PWM1;
+    // sConfigOC.Pulse = value;
+    // sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+    // sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+    // HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_3);
+    // HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3); 
+    TIM1->CCR3 = value; 
 }
 
 void setGreen(uint16_t value)
 {
-    TIM_OC_InitTypeDef sConfigOC;
-    HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_3);
-    sConfigOC.OCMode = TIM_OCMODE_PWM1;
-    sConfigOC.Pulse = value;
-    sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-    sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-    HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_3);
-    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);  
+    // TIM_OC_InitTypeDef sConfigOC;
+    // HAL_TIM_PWM_Stop(&htim1,TIM_CHANNEL_2);
+    // sConfigOC.OCMode = TIM_OCMODE_PWM1;
+    // sConfigOC.Pulse = value;
+    // sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
+    // sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+    // HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_2);
+    // HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+    TIM1->CCR2 = value;
 }
 
 void setRGB(uint16_t red, uint16_t green, uint16_t blue){
