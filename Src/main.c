@@ -138,12 +138,12 @@ int main(void)
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
   HAL_TIM_OC_Start(&htim3,TIM_CHANNEL_1);
-  //HAL_DMA_Start_IT(&hdma_tim3_ch1_trig,(uint32_t)SineLookup,dma_Blue_Destination,512);
+  HAL_DMA_Start_IT(&hdma_tim3_ch1_trig,(uint32_t)SineLookup,dma_Blue_Destination,512);
   HAL_DMA_Start_IT(&hdma_tim3_ch3,(uint32_t)SineLookup,dma_Green_Destination,512);
   HAL_DMA_Start_IT(&hdma_tim3_ch4_up,(uint32_t)SineLookup,dma_Red_Destination,512);
-  //__HAL_TIM_ENABLE_DMA(&htim3,TIM_DMA_CC1);
-  //__HAL_TIM_ENABLE_DMA(&htim3,TIM_DMA_CC3);
-  //__HAL_TIM_ENABLE_DMA(&htim3,TIM_DMA_CC4);
+  __HAL_TIM_ENABLE_DMA(&htim3,TIM_DMA_CC1);
+  __HAL_TIM_ENABLE_DMA(&htim3,TIM_DMA_CC3);
+  __HAL_TIM_ENABLE_DMA(&htim3,TIM_DMA_CC4);
   
   /* USER CODE END 2 */
 
@@ -204,7 +204,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL12;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL4;
   RCC_OscInitStruct.PLL.PREDIV = RCC_PREDIV_DIV1;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {

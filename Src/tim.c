@@ -22,7 +22,7 @@
 
 /* USER CODE BEGIN 0 */
 #define NS       512
-#define TIM4CLK  48000000
+#define TIM4CLK  16000000
 #define F_SIGNAL 9600
 
 uint32_t TIM3_Ticks = TIM4CLK / (NS * F_SIGNAL);
@@ -101,7 +101,7 @@ void MX_TIM3_Init(void)
   TIM_OC_InitTypeDef sConfigOC = {0};
 
   htim3.Instance = TIM3;
-  htim3.Init.Prescaler = 48000000-1;
+  htim3.Init.Prescaler = 16000000-1;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim3.Init.Period = TIM3_Ticks-1;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
