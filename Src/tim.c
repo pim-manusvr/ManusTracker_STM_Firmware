@@ -33,8 +33,8 @@ uint32_t TIM3_Ticks = TIM4CLK / (NS * F_SIGNAL);
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim3;
 DMA_HandleTypeDef hdma_tim3_ch1_trig;
-DMA_HandleTypeDef hdma_tim3_ch1_green;
-
+DMA_HandleTypeDef hdma_tim3_ch3;
+DMA_HandleTypeDef hdma_tim3_ch4_up;
 
 /* TIM1 init function */
 void MX_TIM1_Init(void)
@@ -133,6 +133,14 @@ void MX_TIM3_Init(void)
   {
     Error_Handler();
   }
+  if (HAL_TIM_OC_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_TIM_OC_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_4) != HAL_OK)
+  {
+    Error_Handler();
+  }
 
 }
 
@@ -183,19 +191,55 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
     __HAL_LINKDMA(tim_baseHandle,hdma[TIM_DMA_ID_CC1],hdma_tim3_ch1_trig);
     __HAL_LINKDMA(tim_baseHandle,hdma[TIM_DMA_ID_TRIGGER],hdma_tim3_ch1_trig);
 
-  /* USER CODE BEGIN TIM3_MspInit 1 */
-    hdma_tim3_ch1_green.Instance = DMA1_Channel4;
-    hdma_tim3_ch1_green.Init.Direction = DMA_MEMORY_TO_PERIPH;
-    hdma_tim3_ch1_green.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_tim3_ch1_green.Init.MemInc = DMA_MINC_DISABLE;
-    hdma_tim3_ch1_green.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
-    hdma_tim3_ch1_green.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
-    hdma_tim3_ch1_green.Init.Mode = DMA_CIRCULAR;
-    hdma_tim3_ch1_green.Init.Priority = DMA_PRIORITY_HIGH;
+    /* TIM3_CH3 Init */
+    hdma_tim3_ch3.Instance = DMA1_Channel2;
+    hdma_tim3_ch3.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    hdma_tim3_ch3.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_tim3_ch3.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_tim3_ch3.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+    hdma_tim3_ch3.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
+    hdma_tim3_ch3.Init.Mode = DMA_CIRCULAR;
+    hdma_tim3_ch3.Init.Priority = DMA_PRIORITY_HIGH;
+    if (HAL_DMA_Init(&hdma_tim3_ch3) != HAL_OK)
+    {
+      Error_Handler();
+    }
 
-    //if(HAL_DMA_Init(&hdma_tim3_ch1_green) != HAL_OK){
-    //  Error_Handler();
-    //}
+    __HAL_LINKDMA(tim_baseHandle,hdma[TIM_DMA_ID_CC3],hdma_tim3_ch3);
+
+    /* TIM3_CH4_UP Init */
+    hdma_tim3_ch4_up.Instance = DMA1_Channel3;
+    hdma_tim3_ch4_up.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    hdma_tim3_ch4_up.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_tim3_ch4_up.Init.MemInc = DMA_MINC_ENABLE;
+    hdma_tim3_ch4_up.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+    hdma_tim3_ch4_up.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
+    hdma_tim3_ch4_up.Init.Mode = DMA_CIRCULAR;
+    hdma_tim3_ch4_up.Init.Priority = DMA_PRIORITY_HIGH;
+    if (HAL_DMA_Init(&hdma_tim3_ch4_up) != HAL_OK)
+    {
+      Error_Handler();
+    }
+
+    /* Several peripheral DMA handle pointers point to the same DMA handle.
+     Be aware that there is only one channel to perform all the requested DMAs. */
+    __HAL_LINKDMA(tim_baseHandle,hdma[TIM_DMA_ID_CC4],hdma_tim3_ch4_up);
+    __HAL_LINKDMA(tim_baseHandle,hdma[TIM_DMA_ID_UPDATE],hdma_tim3_ch4_up);
+
+  /* USER CODE BEGIN TIM3_MspInit 1 */
+    // hdma_tim3_ch1_green.Instance = DMA1_Channel4;
+    // hdma_tim3_ch1_green.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    // hdma_tim3_ch1_green.Init.PeriphInc = DMA_PINC_DISABLE;
+    // hdma_tim3_ch1_green.Init.MemInc = DMA_MINC_DISABLE;
+    // hdma_tim3_ch1_green.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+    // hdma_tim3_ch1_green.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
+    // hdma_tim3_ch1_green.Init.Mode = DMA_CIRCULAR;
+    // hdma_tim3_ch1_green.Init.Priority = DMA_PRIORITY_HIGH;
+
+
+    // if(HAL_DMA_Init(&hdma_tim3_ch1_green) != HAL_OK){
+    //   Error_Handler();
+    // }
 
     //__HAL_LINKDMA(tim_baseHandle,hdma[TIM_DMA_ID_CC2],hdma_tim3_ch1_green);
   /* USER CODE END TIM3_MspInit 1 */
@@ -260,8 +304,10 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
 
     /* TIM3 DMA DeInit */
     HAL_DMA_DeInit(tim_baseHandle->hdma[TIM_DMA_ID_CC1]);
-    HAL_DMA_DeInit(tim_baseHandle->hdma[TIM_DMA_ID_CC2]);
     HAL_DMA_DeInit(tim_baseHandle->hdma[TIM_DMA_ID_TRIGGER]);
+    HAL_DMA_DeInit(tim_baseHandle->hdma[TIM_DMA_ID_CC3]);
+    HAL_DMA_DeInit(tim_baseHandle->hdma[TIM_DMA_ID_CC4]);
+    HAL_DMA_DeInit(tim_baseHandle->hdma[TIM_DMA_ID_UPDATE]);
   /* USER CODE BEGIN TIM3_MspDeInit 1 */
 
   /* USER CODE END TIM3_MspDeInit 1 */

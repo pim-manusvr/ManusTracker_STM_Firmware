@@ -32,10 +32,11 @@
 
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim3;
-extern DMA_HandleTypeDef hdma_tim3_ch1_trig;
-extern DMA_HandleTypeDef hdma_tim3_ch1_green;
 
 /* USER CODE BEGIN Private defines */
+extern DMA_HandleTypeDef hdma_tim3_ch3;
+extern DMA_HandleTypeDef hdma_tim3_ch4_up;
+extern DMA_HandleTypeDef hdma_tim3_ch1_trig;
 
 /* USER CODE END Private defines */
 

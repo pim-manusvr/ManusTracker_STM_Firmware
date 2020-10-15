@@ -68,7 +68,8 @@ uint32_t SineLookup[512] = {
 
 uint32_t dma_Blue_Destination = (uint32_t) &(TIM1->CCR1);
 uint32_t dma_Green_Destination = (uint32_t) &(TIM1->CCR2);
-/* USER CODE END Includes */ 
+uint32_t dma_Red_Destination = (uint32_t) &(TIM1->CCR3);
+/* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
@@ -137,10 +138,13 @@ int main(void)
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
   HAL_TIM_OC_Start(&htim3,TIM_CHANNEL_1);
-  HAL_DMA_Start_IT(&hdma_tim3_ch1_trig,(uint32_t)SineLookup,dma_Blue_Destination,512);
-  //HAL_DMA_Start_IT(&hdma_tim3_ch1_green,(uint32_t)SineLookup,dma_Green_Destination,512);
-  __HAL_TIM_ENABLE_DMA(&htim3,TIM_DMA_CC1);
-  //__HAL_TIM_ENABLE_DMA(&htim3,TIM_DMA_CC2);
+  //HAL_DMA_Start_IT(&hdma_tim3_ch1_trig,(uint32_t)SineLookup,dma_Blue_Destination,512);
+  HAL_DMA_Start_IT(&hdma_tim3_ch3,(uint32_t)SineLookup,dma_Green_Destination,512);
+  HAL_DMA_Start_IT(&hdma_tim3_ch4_up,(uint32_t)SineLookup,dma_Red_Destination,512);
+  //__HAL_TIM_ENABLE_DMA(&htim3,TIM_DMA_CC1);
+  //__HAL_TIM_ENABLE_DMA(&htim3,TIM_DMA_CC3);
+  //__HAL_TIM_ENABLE_DMA(&htim3,TIM_DMA_CC4);
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
