@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * File Name          : TIM.h
-  * Description        : This file provides code for the configuration
-  *                      of the TIM instances.
+  * File Name          : dma.h
+  * Description        : This file contains all the function prototypes for
+  *                      the dma.c file
   ******************************************************************************
   * @attention
   *
@@ -17,8 +17,9 @@
   ******************************************************************************
   */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __tim_H
-#define __tim_H
+#ifndef __dma_H
+#define __dma_H
+
 #ifdef __cplusplus
  extern "C" {
 #endif
@@ -26,40 +27,27 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+/* DMA memory to memory transfer handles -------------------------------------*/
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
-
-extern TIM_HandleTypeDef htim1;
-extern TIM_HandleTypeDef htim3;
-extern DMA_HandleTypeDef hdma_tim3_ch1_trig;
-extern DMA_HandleTypeDef hdma_tim3_ch1_green;
 
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
-void MX_TIM1_Init(void);
-void MX_TIM3_Init(void);
-                        
-void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
-                    
+void MX_DMA_Init(void);
+
 /* USER CODE BEGIN Prototypes */
-void setBlue(uint16_t value);
-void setGreen(uint16_t value);
-void setRed(uint16_t value);
-void setRGB(uint16_t red, uint16_t green, uint16_t blue );
 
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
 }
 #endif
-#endif /*__ tim_H */
 
-/**
-  * @}
-  */
+#endif /* __dma_H */
 
 /**
   * @}
