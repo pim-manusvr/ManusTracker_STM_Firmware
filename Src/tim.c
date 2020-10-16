@@ -23,7 +23,7 @@
 /* USER CODE BEGIN 0 */
 #define NS       512
 #define TIM4CLK  16000000
-#define F_SIGNAL 9600
+#define F_SIGNAL 12000
 
 uint32_t TIM3_Ticks = TIM4CLK / (NS * F_SIGNAL);
 //uint32_t TIM3_Ticks = 5000;

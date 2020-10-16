@@ -34,8 +34,8 @@ uint16_t f_updateLed = 0;
 uint8_t read_r = 0;
 uint8_t read_g = 0;
 uint8_t read_b = 0;
-static uint8_t g_trackerState = TRACKER_OFF;
-uint8_t g_oldTrackerState = TRACKER_OFF;
+static uint8_t g_trackerState = TRACKER_ON;
+uint8_t g_oldTrackerState = TRACKER_ON;
 uint32_t lastIT = 0;
 uint32_t currentIT = 0;
 uint16_t timeThreshold = 500;
@@ -127,7 +127,7 @@ int main(void)
   setRGB(1024,1024,1024);
   __HAL_TIM_ENABLE_DMA(&htim3,TIM_DMA_CC1);
   __HAL_TIM_ENABLE_DMA(&htim3,TIM_DMA_CC3);
-  HAL_Delay(500);
+  HAL_Delay(2000);
 
   timeThreshold = 0;
   HAL_GPIO_EXTI_Callback(GPIO_PIN_1);
