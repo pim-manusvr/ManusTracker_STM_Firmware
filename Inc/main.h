@@ -54,7 +54,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+void resetDMAIT(uint32_t lookupTable);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
