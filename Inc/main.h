@@ -55,6 +55,7 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 void resetDMAIT(uint32_t lookupTable);
+void HAL_GPIO_EXTI_Callback(uint16_t Pin);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

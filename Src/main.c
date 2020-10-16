@@ -107,6 +107,7 @@ int main(void)
   MX_DMA_Init();
   MX_TIM1_Init();
   MX_TIM3_Init();
+  MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
@@ -221,7 +222,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
   {
     Error_Handler();
   }
@@ -239,6 +240,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t Pin)
 
   if(deltaTimeIT <= timeThreshold)
   {
+    HAL_TIM_Base_Stop_IT(&htim14);
+    HAL_TIM_Base_Start_IT(&htim14);
     if (read_b == 0 && read_r && read_g){
     g_trackerState = TRACKER_PAIRING;
     }
